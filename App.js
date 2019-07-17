@@ -17,6 +17,8 @@ export default class App extends React.Component {
     const db = firebase.firestore(),
       auth = firebase.auth();
     const collection = db.collection('livros');
+
+    await auth.signInWithPhoneNumber('+55 11 99999-9999');
     
     auth.onAuthStateChanged((user) => {
       console.log(user);
