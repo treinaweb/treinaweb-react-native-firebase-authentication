@@ -12,8 +12,14 @@ export default class App extends React.Component {
   }
 
   async componentDidMount() {
-    const db = firebase.firestore();
+    console.clear();
+    const db = firebase.firestore(),
+      auth = firebase.auth();
     const collection = db.collection('livros');
+
+    const authResponse = await auth.signInAnonymously();
+
+    console.log(authResponse);
     
     const unsubscribe = collection.onSnapshot((querySnapshot) => {
       const list = [];
@@ -34,7 +40,7 @@ export default class App extends React.Component {
             Welcome to {'\n'} React Native Firebase
           </Text>
           {
-            state.list.map(item => <Text>{item.nome}</Text>)
+            state.list.map(item => <Text key={item.nome} >{item.nome}</Text>)
           }
         </View>
       </ScrollView>
