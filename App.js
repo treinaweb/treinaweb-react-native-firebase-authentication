@@ -16,12 +16,14 @@ export default class App extends React.Component {
     const db = firebase.firestore(),
       auth = firebase.auth();
     const collection = db.collection('livros');
+    
+    try{
+      const authResponse = await auth.signInWithEmailAndPassword('abc@teste.com', '123456');
+      console.log(authResponse);
+    }catch(error){
+      console.log(error);
+    }
 
-    const authResponse = await auth.signInAnonymously();
-
-    await auth.signOut();
-
-    console.log(authResponse);
     
     const unsubscribe = collection.onSnapshot((querySnapshot) => {
       const list = [];
