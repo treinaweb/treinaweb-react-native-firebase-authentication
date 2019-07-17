@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "791527872979",
+    "firebase_url": "https://meuapp-79f63.firebaseio.com",
+    "project_id": "meuapp-79f63",
+    "storage_bucket": "meuapp-79f63.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:791527872979:android:7964079695f359fb",
+        "android_client_info": {
+          "package_name": "com.treinaweb.meuapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "791527872979-j9kmo1u1re9vncttk0te4bo3om69kar3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAWGPvhCB33xQj0lEu7UoUYdlZUdcgpLt4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "791527872979-j9kmo1u1re9vncttk0te4bo3om69kar3.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "791527872979-e7lh8icj1lqjqhfg6q5pga79ma9pl2cl.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "org.reactjs.native.example.meuapp"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
