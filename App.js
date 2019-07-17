@@ -18,7 +18,9 @@ export default class App extends React.Component {
     const collection = db.collection('livros');
     
     try{
-      const authResponse = await auth.signInWithEmailAndPassword('abc@teste.com', '123456');
+      const phoneConfirm = await auth.signInWithPhoneNumber('+55 11 99999-9999');
+      
+      const authResponse = await phoneConfirm.confirm('112233');
       console.log(authResponse);
     }catch(error){
       console.log(error);
