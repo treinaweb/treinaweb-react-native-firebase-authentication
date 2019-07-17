@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Platform, Image, Text, View, ScrollView } from 'react-native';
+import { StyleSheet, Platform, Image, Text, View, ScrollView, Button } from 'react-native';
 
 import firebase from 'react-native-firebase';
 
@@ -7,7 +7,8 @@ export default class App extends React.Component {
   constructor() {
     super();
     this.state = {
-      list: []
+      list: [],
+      user: null
     };
   }
 
@@ -17,14 +18,10 @@ export default class App extends React.Component {
       auth = firebase.auth();
     const collection = db.collection('livros');
     
-    try{
-      const phoneConfirm = await auth.signInWithPhoneNumber('+55 11 99999-9999');
-      
-      const authResponse = await phoneConfirm.confirm('112233');
-      console.log(authResponse);
-    }catch(error){
-      console.log(error);
-    }
+    auth.onAuthStateChanged((user) => {
+      console.log(user);
+      this.setState({user});
+    })
 
     
     const unsubscribe = collection.onSnapshot((querySnapshot) => {
@@ -36,15 +33,27 @@ export default class App extends React.Component {
     });
   }
 
+  login = async () => {
+    const auth = firebase.auth();
+    return auth.signInWithEmailAndPassword('abc@teste.com', '123456');
+  }
+
+  logout = () => {
+    const auth = firebase.auth();
+    return auth.signOut();
+  }
+
   render() {
     const {state} = this;
     return (
       <ScrollView>
         <View style={styles.container}>
           <Image source={require('./assets/ReactNativeFirebase.png')} style={[styles.logo]}/>
-          <Text style={styles.welcome}>
-            Welcome to {'\n'} React Native Firebase
-          </Text>
+          {
+            state.user && !state.user.isAnonymous ?
+            <Button title={'Logout'} onPress={this.logout} /> : 
+            <Button title={'Login'} onPress={this.login} />
+          }
           {
             state.list.map(item => <Text key={item.nome} >{item.nome}</Text>)
           }
