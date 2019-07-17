@@ -19,6 +19,8 @@ export default class App extends React.Component {
 
     const authResponse = await auth.signInAnonymously();
 
+    await auth.signOut();
+
     console.log(authResponse);
     
     const unsubscribe = collection.onSnapshot((querySnapshot) => {
