@@ -18,13 +18,8 @@ export default class App extends React.Component {
       auth = firebase.auth();
     const collection = db.collection('livros');
 
-    const email = 'def@teste.com',
-      password = '123123';
+    auth.signInAnonymously();
 
-    await auth.createUserWithEmailAndPassword(email, password);
-
-    auth.currentUser.sendEmailVerification()
-    
     auth.onAuthStateChanged((user) => {
       console.log(user);
       this.setState({user});
@@ -50,6 +45,16 @@ export default class App extends React.Component {
     return auth.signOut();
   }
 
+  createAccount = () => {
+    const auth = firebase.auth(),
+      email = 'def@teste.com',
+      password = '123123';
+
+    const credential = firebase.auth.EmailAuthProvider.credential(email, password);
+
+    auth.currentUser.linkWithCredential(credential);
+  }
+
   render() {
     const {state} = this;
     return (
@@ -61,6 +66,7 @@ export default class App extends React.Component {
             <Button title={'Logout'} onPress={this.logout} /> : 
             <Button title={'Login'} onPress={this.login} />
           }
+          <Button title={'Nova Conta'} onPress={this.createAccount} />
           {
             state.list.map(item => <Text key={item.nome} >{item.nome}</Text>)
           }
