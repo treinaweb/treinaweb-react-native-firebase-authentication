@@ -21,7 +21,9 @@ export default class App extends React.Component {
     const email = 'def@teste.com',
       password = '123123';
 
-    auth.createUserWithEmailAndPassword(email, password);
+    await auth.createUserWithEmailAndPassword(email, password);
+
+    auth.currentUser.sendEmailVerification()
     
     auth.onAuthStateChanged((user) => {
       console.log(user);
