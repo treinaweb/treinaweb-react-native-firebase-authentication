@@ -18,7 +18,10 @@ export default class App extends React.Component {
       auth = firebase.auth();
     const collection = db.collection('livros');
 
-    await auth.signInWithPhoneNumber('+55 11 99999-9999');
+    const email = 'def@teste.com',
+      password = '123123';
+
+    auth.createUserWithEmailAndPassword(email, password);
     
     auth.onAuthStateChanged((user) => {
       console.log(user);
