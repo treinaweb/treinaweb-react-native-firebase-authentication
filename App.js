@@ -18,7 +18,6 @@ export default class App extends React.Component {
       auth = firebase.auth();
     const collection = db.collection('livros');
 
-    auth.signInAnonymously();
 
     auth.onAuthStateChanged((user) => {
       console.log(user);
@@ -51,8 +50,19 @@ export default class App extends React.Component {
       password = '123123';
 
     const credential = firebase.auth.EmailAuthProvider.credential(email, password);
-
+    
     auth.currentUser.linkWithCredential(credential);
+  }
+
+  linkWithPhone = async () => {
+    const phoneNumber = '+55 11 99999-9999',
+      verificationCode = '112233',
+      auth = firebase.auth();
+    const verification =  await auth.signInWithPhoneNumber(phoneNumber);
+    
+    const phoneCredential = firebase.auth.PhoneAuthProvider.credential(verification.verificationId, verificationCode);
+
+    auth.currentUser.linkWithCredential(phoneCredential);
   }
 
   render() {
@@ -67,6 +77,7 @@ export default class App extends React.Component {
             <Button title={'Login'} onPress={this.login} />
           }
           <Button title={'Nova Conta'} onPress={this.createAccount} />
+          <Button title={'Ligar com Telefone'} onPress={this.linkWithPhone} />
           {
             state.list.map(item => <Text key={item.nome} >{item.nome}</Text>)
           }
