@@ -13,6 +13,13 @@ exports.onNewUser = functions.auth.user().onCreate((user) => {
     admin.firestore().collection('usuarios').doc(user.uid).set({
         profissao: 'Programador'
     })
+
+    if(user.email && user.email.endsWith('@treinaweb.com.br')){
+        const customClaims = {
+            role: 'admin'
+        }
+        admin.auth().setCustomUserClaims(user.uid, customClaims);
+    }
 })
 
 exports.onDeleteUser = functions.auth.user().onDelete((user) => {
