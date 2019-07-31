@@ -19,7 +19,9 @@ export default class App extends React.Component {
       auth = firebase.auth();
     const collection = db.collection('livros');
 
-    GoogleSignin.configure();
+    GoogleSignin.configure({
+      webClientId: '791527872979-j9kmo1u1re9vncttk0te4bo3om69kar3.apps.googleusercontent.com'
+    });
 
     auth.onAuthStateChanged((user) => {
       console.log(user);
@@ -51,6 +53,10 @@ export default class App extends React.Component {
         await GoogleSignin.hasPlayServices();
         const userInfo = await GoogleSignin.signIn();
         console.log(userInfo);
+        const credential = firebase.auth.GoogleAuthProvider.credential(userInfo.idToken);
+        
+        //firebase.auth().currentUser.linkWithCredential(credential);
+        //await firebase.auth().signInWithCredential(credential);
       }catch(error){
 
       }
