@@ -2,6 +2,7 @@ import React from 'react';
 import { StyleSheet, Platform, Image, Text, View, ScrollView, Button } from 'react-native';
 
 import firebase from 'react-native-firebase';
+import { GoogleSignin, GoogleSigninButton } from 'react-native-google-signin';
 
 export default class App extends React.Component {
   constructor() {
@@ -18,6 +19,7 @@ export default class App extends React.Component {
       auth = firebase.auth();
     const collection = db.collection('livros');
 
+    GoogleSignin.configure();
 
     auth.onAuthStateChanged((user) => {
       console.log(user);
@@ -42,6 +44,25 @@ export default class App extends React.Component {
   logout = () => {
     const auth = firebase.auth();
     return auth.signOut();
+  }
+
+  loginGoogle = async () => {
+      try{
+        await GoogleSignin.hasPlayServices();
+        const userInfo = await GoogleSignin.signIn();
+        console.log(userInfo);
+      }catch(error){
+
+      }
+  }
+
+  logoutGoogle = async () => {
+    try{
+      await GoogleSignin.revokeAccess();
+      await GoogleSignin.signOut()
+    }catch(error){
+
+    }
   }
 
   createAccount = () => {
@@ -81,6 +102,12 @@ export default class App extends React.Component {
           {
             state.list.map(item => <Text key={item.nome} >{item.nome}</Text>)
           }
+          <GoogleSigninButton
+            size={GoogleSigninButton.Size.Wide}
+            color={GoogleSigninButton.Color.Dark}
+            style={{width: 180, height: 55}}
+            onPress={this.loginGoogle}
+          />
         </View>
       </ScrollView>
     );
