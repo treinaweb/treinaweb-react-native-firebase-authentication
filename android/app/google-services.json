@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "791527872979-86sgt9ao1jgkiehs6cmta3tfoq5gfq9r.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.treinaweb.meuapp",
+            "certificate_hash": "14a74bb4ea35e5741433384998df8c5e1196c7d1"
+          }
+        },
+        {
           "client_id": "791527872979-j9kmo1u1re9vncttk0te4bo3om69kar3.apps.googleusercontent.com",
           "client_type": 3
         }
@@ -32,10 +40,10 @@
               "client_type": 3
             },
             {
-              "client_id": "791527872979-e7lh8icj1lqjqhfg6q5pga79ma9pl2cl.apps.googleusercontent.com",
+              "client_id": "791527872979-9hc4pr17ie2audg7uhukhrogegrt8fe8.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "org.reactjs.native.example.meuapp"
+                "bundle_id": "com.invertase.meuapp"
               }
             }
           ]
