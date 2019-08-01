@@ -79,8 +79,12 @@ export default class App extends React.Component {
         const result = await LoginManager.logInWithPermissions(['public_profile', 'email']);
         data = await AccessToken.getCurrentAccessToken();
       }*/
-
       console.log(data);
+
+      const credential = firebase.auth.FacebookAuthProvider.credential(data.accessToken);
+
+      firebase.auth().currentUser.linkWithCredential(credential);
+      //const firebaseUserCredential = await firebase.auth().signInWithCredential(credential);
     }catch(error){
 
     }
