@@ -3,6 +3,7 @@ import { StyleSheet, Platform, Image, Text, View, ScrollView, Button } from 'rea
 
 import firebase from 'react-native-firebase';
 import { GoogleSignin, GoogleSigninButton } from 'react-native-google-signin';
+import { AccessToken, LoginManager, LoginButton } from 'react-native-fbsdk';
 
 export default class App extends React.Component {
   constructor() {
@@ -71,6 +72,24 @@ export default class App extends React.Component {
     }
   }
 
+  loginFacebook = async () => {
+    try{
+      let data = await AccessToken.getCurrentAccessToken();
+      /*if(!data){
+        const result = await LoginManager.logInWithPermissions(['public_profile', 'email']);
+        data = await AccessToken.getCurrentAccessToken();
+      }*/
+
+      console.log(data);
+    }catch(error){
+
+    }
+  }
+
+  logoutFacebook = async () => {
+    //LoginManager.logOut();
+  }
+
   createAccount = () => {
     const auth = firebase.auth(),
       email = 'def@teste.com',
@@ -113,6 +132,10 @@ export default class App extends React.Component {
             color={GoogleSigninButton.Color.Dark}
             style={{width: 180, height: 55}}
             onPress={this.loginGoogle}
+          />
+          <LoginButton
+            onLoginFinished={this.loginFacebook}
+            onLogoutFinished={this.logoutFacebook}
           />
         </View>
       </ScrollView>
