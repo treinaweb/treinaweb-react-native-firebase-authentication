@@ -3,7 +3,7 @@ import { StyleSheet, Platform, Image, Text, View, ScrollView, Button } from 'rea
 
 import firebase from 'react-native-firebase';
 import { GoogleSignin, GoogleSigninButton } from 'react-native-google-signin';
-
+import { AccessToken, LoginManager } from 'react-native-fbsdk';
 export default class App extends React.Component {
   constructor() {
     super();
