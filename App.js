@@ -3,7 +3,7 @@ import { StyleSheet, Platform, Image, Text, View, ScrollView, Button } from 'rea
 
 import firebase from 'react-native-firebase';
 import { GoogleSignin, GoogleSigninButton } from 'react-native-google-signin';
-
+import { AccessToken, LoginManager } from 'react-native-fbsdk';
 export default class App extends React.Component {
   constructor() {
     super();
@@ -18,6 +18,9 @@ export default class App extends React.Component {
     const db = firebase.firestore(),
       auth = firebase.auth();
     const collection = db.collection('livros');
+
+    const result = await LoginManager.logInWithPermissions(['public_profile', 'email']);
+    console.log(result)
 
     GoogleSignin.configure({
       webClientId: '791527872979-j9kmo1u1re9vncttk0te4bo3om69kar3.apps.googleusercontent.com'
