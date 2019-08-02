@@ -4,6 +4,7 @@ import { StyleSheet, Platform, Image, Text, View, ScrollView, Button } from 'rea
 import firebase from 'react-native-firebase';
 import { GoogleSignin, GoogleSigninButton } from 'react-native-google-signin';
 import { AccessToken, LoginManager, LoginButton } from 'react-native-fbsdk';
+import FingerprintScanner from 'react-native-fingerprint-scanner';
 
 export default class App extends React.Component {
   constructor() {
@@ -23,6 +24,10 @@ export default class App extends React.Component {
     GoogleSignin.configure({
       webClientId: '791527872979-j9kmo1u1re9vncttk0te4bo3om69kar3.apps.googleusercontent.com'
     });
+
+    FingerprintScanner.isSensorAvailable()
+      .then(type => console.log('Fingerprint Type', type))
+      .catch(error => {})
 
     auth.onAuthStateChanged((user) => {
       console.log(user);
@@ -120,6 +125,20 @@ export default class App extends React.Component {
     auth.currentUser.linkWithCredential(phoneCredential);
   }
 
+  startFingerprint = () => {
+    FingerprintScanner.authenticate({
+      onAttempt: () => {
+        console.log('Fingerprint', 11111);
+      }
+    })
+    .then(() => {
+      console.log('Fingerprint', 22222);
+    })
+    .catch(() => {
+      console.log('Fingerprint', 33333);
+    })
+  }
+
   render() {
     const {state} = this;
     return (
@@ -142,11 +161,8 @@ export default class App extends React.Component {
             style={{width: 180, height: 55}}
             onPress={this.loginGoogle}
           />
-          <Button title={'Desligar Google'} onPress={this.unlinkGoogle} />
-          <LoginButton
-            onLoginFinished={this.loginFacebook}
-            onLogoutFinished={this.logoutFacebook}
-          />
+          <Button title={'Ler Digitais'} onPress={this.startFingerprint} />
+         
         </View>
       </ScrollView>
     );
