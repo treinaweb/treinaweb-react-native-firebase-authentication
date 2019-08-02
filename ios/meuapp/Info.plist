@@ -85,5 +85,8 @@
     <string>fbauth2</string>
     <string>fbshareextension</string>
   </array>
+
+  <key>NSFaceIDUsageDescription</key>
+  <string>$(PRODUCT_NAME) precisa de acesso ao FaceID</string>
 </dict>
 </plist>

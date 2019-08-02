@@ -3,6 +3,7 @@ package com.treinaweb.meuapp;
 import android.support.multidex.MultiDexApplication;
 import com.facebook.FacebookSdk;
 import com.facebook.react.ReactApplication;
+import com.hieuvp.fingerprint.ReactNativeFingerprintScannerPackage;
 import com.facebook.reactnative.androidsdk.FBSDKPackage;
 import co.apptailor.googlesignin.RNGoogleSigninPackage;
 import com.facebook.react.ReactNativeHost;
@@ -53,6 +54,7 @@ public class MainApplication extends MultiDexApplication implements ReactApplica
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
         new MainReactPackage(),
+            new ReactNativeFingerprintScannerPackage(),
             new FBSDKPackage(mCallbackManager),
             new RNGoogleSigninPackage(),
         new RNFirebasePackage(),
