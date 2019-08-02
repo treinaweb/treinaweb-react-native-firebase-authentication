@@ -72,6 +72,10 @@ export default class App extends React.Component {
     }
   }
 
+  unlinkGoogle = () => {
+    firebase.auth().currentUser.unlink('google.com');
+  }
+
   loginFacebook = async () => {
     try{
       let data = await AccessToken.getCurrentAccessToken();
@@ -85,6 +89,7 @@ export default class App extends React.Component {
 
       firebase.auth().currentUser.linkWithCredential(credential);
       //const firebaseUserCredential = await firebase.auth().signInWithCredential(credential);
+  
     }catch(error){
 
     }
@@ -137,6 +142,7 @@ export default class App extends React.Component {
             style={{width: 180, height: 55}}
             onPress={this.loginGoogle}
           />
+          <Button title={'Desligar Google'} onPress={this.unlinkGoogle} />
           <LoginButton
             onLoginFinished={this.loginFacebook}
             onLogoutFinished={this.logoutFacebook}
