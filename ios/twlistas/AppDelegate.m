@@ -12,7 +12,15 @@
 #import <React/RCTRootView.h>
 #import <Firebase.h>
 
+#import "RNGoogleSignin.h"
+
 @implementation AppDelegate
+  
+- (BOOL)application:(UIApplication *)application openURL:(NSURL *)url options:(NSDictionary<UIApplicationOpenURLOptionsKey,id> *)options
+  {
+    return [RNGoogleSignin application:application openURL:url sourceApplication:options[UIApplicationOpenURLOptionsSourceApplicationKey] annotation:options[UIApplicationOpenURLOptionsAnnotationKey]];
+  }
+  
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {

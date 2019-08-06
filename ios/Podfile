@@ -22,6 +22,9 @@ target 'twlistas' do
   pod 'Firebase/Performance', '~> 6.3.0'
   pod 'Fabric', '~> 1.10.2'
   pod 'Crashlytics', '~> 3.13.2'
+  
+  pod 'GoogleSignIn', '~> 4.4.0'
+
 
 end
 

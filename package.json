@@ -14,7 +14,9 @@
   "dependencies": {
     "react": "16.8.3",
     "react-native": "0.59.9",
-    "react-native-firebase": "^5.5.4"
+    "react-native-fingerprint-scanner": "^2.6.2",
+    "react-native-firebase": "^5.5.4",
+    "react-native-google-signin": "^2.0.0"
   },
   "devDependencies": {
     "@babel/core": "^7.4.5",
