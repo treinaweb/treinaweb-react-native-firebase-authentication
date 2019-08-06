@@ -1,8 +1,11 @@
 import React, {Component} from 'react';
-import {View, Text, TextInput, Button, StyleSheet} from 'react-native';
+import {View, Text, TextInput, Button, StyleSheet, Image} from 'react-native';
 
 import firebase from 'react-native-firebase';
 import {GoogleSignin, GoogleSigninButton} from 'react-native-google-signin';
+import FingerprintScanner from 'react-native-fingerprint-scanner';
+
+const fingerprintIcon = 'https://www.materialui.co/materialIcons/action/fingerprint_white_192x192.png';
 
 class Login extends Component{
 
@@ -14,24 +17,52 @@ class Login extends Component{
         email: '',
         password: '',
         errorMessage: '',
-        isNewUser: false
+        isNewUser: false,
+        isScanning: false,
+        scannerMessage: 'Autentique com sua digital'
     }
 
     async componentDidMount(){
-        const auth = firebase.auth();
+        const auth = firebase.auth(),
+            currentUser = auth.currentUser;
+
         GoogleSignin.configure({
             webClientId: '343290796990-72m9eisnvf88uebk80f7qpi12495esh3.apps.googleusercontent.com'
         });
 
-        this.onAuthStateUnsubscribe = auth.onAuthStateChanged(user => {
-            if(user){
-                this.props.onLogin(user);
+        if(currentUser !== null){
+            try{
+                await FingerprintScanner.isSensorAvailable();
+                this.startScanner(currentUser);
+            }catch(error){
+                this.props.onLogin(currentUser);
             }
-        })
+        }
+        
     }
 
-    componentWillUnmount(){
-        this.onAuthStateUnsubscribe();
+    startScanner = async (user) => {
+        if(!this.state.isScanning){
+            this.setState({isScanning: true}, async () => {
+                try{
+                    await FingerprintScanner
+                        .authenticate({
+                            onAttempt: () => {
+                                this.setState({scannerMessage: 'Tente Novamente'});
+                            }
+                        })
+
+                    this.props.onLogin(user);
+                }catch(error){
+                    this.stopScanner();
+                }
+            })
+        }
+    }
+
+    stopScanner = async () => {
+        this.setState({isScanning: false});
+        FingerprintScanner.release();
     }
 
 
@@ -42,6 +73,7 @@ class Login extends Component{
 
         try{
             const response = await auth.signInWithEmailAndPassword(email, password);
+            this.props.onLogin(response);
         }catch(error){
             this.setState({errorMessage: 'Email e/ou Senha inválidos'});
         }
@@ -58,7 +90,8 @@ class Login extends Component{
         const {email, password} = this.state;
         if(password.length >= 6){
             try{
-                await firebase.auth().createUserWithEmailAndPassword(email, password);
+                const response = await firebase.auth().createUserWithEmailAndPassword(email, password);
+                this.props.onLogin(response);
             }catch(error){}
         }else{
             return false;
@@ -75,12 +108,13 @@ class Login extends Component{
     }
 
     signIn = async (credential) => {
-        return firebase.auth().signInWithCredential(credential);
+        const response = await firebase.auth().signInWithCredential(credential);
+        this.props.onLogin(response.user);
     }
 
     render(){
         const {props, state} = this,
-            {errorMessage, isNewUser} = state;
+            {errorMessage, isNewUser, isScanning, scannerMessage} = state;
         return (
             <View style={styles.view} >
                 <View>
@@ -107,6 +141,14 @@ class Login extends Component{
                     color={GoogleSigninButton.Color.Dark}
                     onPress={this.signInGoogle}
                  />
+                 {
+                     !isScanning ? false :
+                     <View style={styles.scannerContainer} >
+                        <Image style={styles.fingerprintIcon} source={{uri: fingerprintIcon}} />
+                        <Text style={styles.scannerMessage} >{scannerMessage}</Text>
+                        <Button title="Cancelar" onPress={this.stopScanner} color="red" />
+                    </View>
+                 }
             </View>
         );
     }
@@ -134,6 +176,23 @@ const styles = StyleSheet.create({
     googleButton: {
         width: 180,
         height: 55
+    },
+    scannerContainer: {
+        ...StyleSheet.absoluteFill,
+        backgroundColor: 'rgba(25, 25, 97, .9)',
+        zIndex: 5,
+        elevation: 5,
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+    fingerprintIcon: {
+        width: 100,
+        height: 100
+    },
+    scannerMessage: {
+        fontSize: 25,
+        color: 'white',
+        marginBottom: 40
     }
 });
 
