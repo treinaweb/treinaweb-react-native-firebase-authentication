@@ -36,4 +36,8 @@
 [Download](https://github.com/treinaweb/treinaweb-react-native-firebase-authentication/archive/projeto-06-01.zip)    |  projeto-06-01     | Projeto: Recuperação de Senha |
 [Download](https://github.com/treinaweb/treinaweb-react-native-firebase-authentication/archive/projeto-08-01.zip)    |  projeto-08-01     | Projeto: Uma conta para cada usuário |
 [Download](https://github.com/treinaweb/treinaweb-react-native-firebase-authentication/archive/projeto-09-01.zip)    |  projeto-09-01     | Projeto: Cadastro e Login com provedores de autenticação |
+[Download](https://github.com/treinaweb/treinaweb-react-native-firebase-authentication/archive/projeto-09-02.zip)    |  projeto-09-02     | Projeto: Conectando e Desconectando provedores de nossa conta |
 [Download](https://github.com/treinaweb/treinaweb-react-native-firebase-authentication/archive/projeto-10-01.zip)    |  projeto-10-01     | Projeto: Login com Biometria |
+
+
+
