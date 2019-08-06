@@ -43,6 +43,13 @@ class Login extends Component{
         }
     }
 
+    resetPassword = () => {
+        const {email} = this.state;
+        if(email){
+            firebase.auth().sendPasswordResetEmail(email);
+        }
+    }
+
     signInEmail = async () => {
         const {email, password} = this.state;
         if(password.length >= 6){
@@ -68,7 +75,11 @@ class Login extends Component{
                     <TextInput style={styles.loginInput} placeholder="Senha" secureTextEntry={true} onChangeText={password => this.setState({password})} />
                     {
                         !isNewUser ?
-                        <Button title="Login" onPress={this.login} />:
+                        <View>
+                            <Button title="Login" onPress={this.login} />
+                            <Button title="Resetar Senha" onPress={this.resetPassword} />
+                        </View>
+                        :
                         <Button title="Cadastrar" onPress={this.signInEmail} />
                     }
                     <Text style={styles.loginError} >{errorMessage}</Text>
