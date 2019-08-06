@@ -27,7 +27,7 @@ export default class App extends Component {
       <SafeAreaView style={styles.container}>
         {
           state.isLogged ? 
-          <Main />:
+          <Main user={state.user} onLogout={this.onLogout} />:
           <Login onLogin={this.onLogin} />
         }
       </SafeAreaView>
