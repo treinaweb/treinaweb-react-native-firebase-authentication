@@ -1,10 +1,15 @@
 import firebase from 'react-native-firebase';
 
-const db = firebase.firestore();
+const db = firebase.firestore(),
+    auth = firebase.auth();
 
 export class DataStore{
     constructor(collectionName){
-        this.collection = db.collection(collectionName);
+        auth.onAuthStateChanged(user => {
+            if(user){
+                this.collection = db.collection(collectionName).doc(user.uid).collection('Items');
+            }
+        })
     }
     formatList(querySnapshot){
         return querySnapshot.docs.map(doc => ({...doc.data(), id: doc.id}));
