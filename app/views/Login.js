@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {View, Text, TextInput, Button, StyleSheet} from 'react-native';
 
 import firebase from 'react-native-firebase';
+import {GoogleSignin, GoogleSigninButton} from 'react-native-google-signin';
 
 class Login extends Component{
 
@@ -18,6 +19,9 @@ class Login extends Component{
 
     async componentDidMount(){
         const auth = firebase.auth();
+        GoogleSignin.configure({
+            webClientId: '343290796990-72m9eisnvf88uebk80f7qpi12495esh3.apps.googleusercontent.com'
+        });
 
         this.onAuthStateUnsubscribe = auth.onAuthStateChanged(user => {
             if(user){
@@ -61,6 +65,19 @@ class Login extends Component{
         }
     }
 
+    signInGoogle = async () => {
+        try{
+            await GoogleSignin.hasPlayServices();
+            const userInfo = await GoogleSignin.signIn();
+            const credential = firebase.auth.GoogleAuthProvider.credential(userInfo.idToken);
+            this.signIn(credential);
+        }catch(error){}
+    }
+
+    signIn = async (credential) => {
+        return firebase.auth().signInWithCredential(credential);
+    }
+
     render(){
         const {props, state} = this,
             {errorMessage, isNewUser} = state;
@@ -84,6 +101,12 @@ class Login extends Component{
                     }
                     <Text style={styles.loginError} >{errorMessage}</Text>
                 </View>
+                <GoogleSigninButton
+                    style={styles.googleButton}
+                    size={GoogleSigninButton.Size.Wide}
+                    color={GoogleSigninButton.Color.Dark}
+                    onPress={this.signInGoogle}
+                 />
             </View>
         );
     }
@@ -107,6 +130,10 @@ const styles = StyleSheet.create({
     },
     loginError: {
         color: 'red'
+    },
+    googleButton: {
+        width: 180,
+        height: 55
     }
 });
 
