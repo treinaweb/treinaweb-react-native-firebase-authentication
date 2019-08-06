@@ -9,7 +9,8 @@ import List from '../components/List';
 export default class App extends Component {
     static defaultProps = {
         user: null,
-        onLogout: () => {}
+        onLogout: () => {},
+        onUpdateUser: () => {}
     }
 
     state = {
@@ -76,7 +77,7 @@ export default class App extends Component {
         if(state.isUserViewVisible){
             return(
                 <SafeAreaView style={styles.container} >
-                    <UserView user={props.user} onLogout={props.onLogout} onClose={this.closeUserView} />
+                    <UserView user={props.user} onLogout={props.onLogout} onClose={this.closeUserView} onUpdateUser={props.onUpdateUser} />
                 </SafeAreaView>
             )
         }

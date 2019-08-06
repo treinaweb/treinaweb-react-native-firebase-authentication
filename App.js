@@ -3,6 +3,7 @@ import {StyleSheet, SafeAreaView, ScrollView, RefreshControl, Modal, Button} fro
 
 import Main from './app/views/Main';
 import Login from './app/views/Login';
+import firebase from 'react-native-firebase';
 
 export default class App extends Component {
   state = {
@@ -10,7 +11,10 @@ export default class App extends Component {
     user: null
   }
 
-  async componentDidMount(){
+  onUpdateUser = async () => {
+    const auth = firebase.auth();
+    await auth.currentUser.reload();
+    this.setState({user: auth.currentUser});
   }
 
   onLogin = async (user) => {
@@ -27,7 +31,7 @@ export default class App extends Component {
       <SafeAreaView style={styles.container}>
         {
           state.isLogged ? 
-          <Main user={state.user} onLogout={this.onLogout} />:
+          <Main user={state.user} onLogout={this.onLogout} onUpdateUser={this.onUpdateUser} />:
           <Login onLogin={this.onLogin} />
         }
       </SafeAreaView>
