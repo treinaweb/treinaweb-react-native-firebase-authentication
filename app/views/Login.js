@@ -12,7 +12,8 @@ class Login extends Component{
     state = {
         email: '',
         password: '',
-        errorMessage: ''
+        errorMessage: '',
+        isNewUser: false
     }
 
     async componentDidMount(){
@@ -42,15 +43,34 @@ class Login extends Component{
         }
     }
 
+    signInEmail = async () => {
+        const {email, password} = this.state;
+        if(password.length >= 6){
+            try{
+                await firebase.auth().createUserWithEmailAndPassword(email, password);
+            }catch(error){}
+        }else{
+            return false;
+        }
+    }
+
     render(){
         const {props, state} = this,
-            {errorMessage} = state;
+            {errorMessage, isNewUser} = state;
         return (
             <View style={styles.view} >
+                <View>
+                    <Button title={isNewUser ? 'Fazer Login' : 'Novo Cadastro'} onPress={() => this.setState({isNewUser: !isNewUser})} />
+                </View>
+
                 <View style={styles.loginBox} >
                     <TextInput style={styles.loginInput} placeholder="Email" keyboardType={'email-address'} autoCapitalize={'none'} onChangeText={email => this.setState({email})} />
                     <TextInput style={styles.loginInput} placeholder="Senha" secureTextEntry={true} onChangeText={password => this.setState({password})} />
-                    <Button title="Login" onPress={this.login} />
+                    {
+                        !isNewUser ?
+                        <Button title="Login" onPress={this.login} />:
+                        <Button title="Cadastrar" onPress={this.signInEmail} />
+                    }
                     <Text style={styles.loginError} >{errorMessage}</Text>
                 </View>
             </View>
