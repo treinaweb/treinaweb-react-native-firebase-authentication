@@ -1,5 +1,5 @@
 
-# TreinaWeb: curso ["React Native - Autenticação com Firebase Authentication"](ttps://www.treinaweb.com.br/curso/react-native-autenticacao-com-firebase-authentication)
+# TreinaWeb: curso ["React Native - Autenticação com Firebase Authentication"](https://www.treinaweb.com.br/curso/react-native-autenticacao-com-firebase-authentication)
 
 
 
